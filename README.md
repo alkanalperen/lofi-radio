@@ -48,6 +48,8 @@ If the button above the prompt does not show up, restart Claude Code.
 2. In the pane: **▶ Play / ■ Stop** (`p`), **−** / **+** for volume (`j` / `k`), **▣ Mini window** (`m`) for the video, and a link to the stream on YouTube.
 3. Run `/lofi stop` to stop.
 
+You can also just ask Claude: "put on some lofi", "turn it down", "what's playing?". The mod gives Claude a `lofi` tool with the same controls.
+
 The player follows Claude Code's language setting, then the system locale. Set the plugin's `language` option to `en` or `tr` to choose.
 
 ## How it works

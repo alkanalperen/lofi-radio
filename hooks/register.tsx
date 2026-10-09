@@ -16,6 +16,7 @@ const MARK = `window_title ${TITLE}`
 // The desktop app's PATH may miss Homebrew, so each tool is tried there too.
 const BIN_DIRS = ['', '/opt/homebrew/bin/', '/usr/local/bin/']
 const PANE = 'claude-fm'
+const TOOL = 'mcp__lofi-radio__lofi'
 const CHECK_MS = 90_000
 const BACKOFF_MS = 300_000
 // A resolved HLS address goes stale within minutes and ffplay then retries its 403s
@@ -769,6 +770,19 @@ export const register: Register = (on, options) => {
   on('session.start', async ($, e, n) => {
     lang = await detectLang($, options.language)
     await $.command.register({ name: 'lofi', description: t().command })
+    await $.tool.register({
+      name: 'lofi',
+      description:
+        'Control the Claude FM lo-fi radio player in this session: play, stop, set the volume, toggle the mini video window, or read its status (state, current track, listening minutes). Use it only when the user asks for music or the radio.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          action: { type: 'string', enum: ['play', 'stop', 'status', 'volume', 'window'] },
+          volume: { type: 'integer', minimum: 10, maximum: 100, description: 'For action "volume": the new volume, in steps of 10.' },
+        },
+        required: ['action'],
+      },
+    })
     // A reload killed the old module's player; the shared state must not claim it still plays.
     if (!player) await patch($, { status: 'off', note: null, track: null, onSince: null, minute: 0 })
     await restoreSaved($)
@@ -791,6 +805,28 @@ export const register: Register = (on, options) => {
 
     return n(e)
   })
+
+  // The same controls for the model, so "put on some lofi" works and the player can be checked.
+  on('tool.call', { tool: TOOL }, async ($, e) => {
+    const input = e as unknown as { action?: string; volume?: number }
+    const s = await current($)
+    if (input.action === 'play') {
+      openPlayer($)
+      if (!isLive(s)) void play($)
+    } else if (input.action === 'stop') {
+      await stop($)
+    } else if (input.action === 'volume' && typeof input.volume === 'number') {
+      // A restart runs for as long as the new player plays, so the call answers without it.
+      void stepVolume($, clampVolume(Math.round(input.volume / 10) * 10) - s.volume)
+    } else if (input.action === 'window') {
+      void toggleWindow($)
+    }
+    const now = await current($)
+    const players = await $.process.run(['pgrep', '-f', MARK]).then(r => r.stdout.trim().split('\n').filter(Boolean).length, () => 0)
+    const { gold } = await todaysFish($)
+    const { status, track, minute, volume, isWindow, note } = now
+    return { result: JSON.stringify({ status, track, minutes: minute, volume, isWindow, note, players, fishToday: gold.length }) }
+  }).catch(() => ({ result: JSON.stringify({ error: 'lofi-radio could not run that' }) }))
 
   on('command.run', { command: 'lofi' }, async ($, e) => {
     if (e.args.trim() === 'stop') {
