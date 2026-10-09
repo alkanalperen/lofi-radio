@@ -2,7 +2,7 @@
 
 Claude FM, Anthropic's 24/7 lo-fi stream, inside Claude Code.
 
-![The player pane: a dotted night lake, Clawd fishing from a boat, the current track and a live bar](assets/player.png)
+![The player: it wakes up, tunes in, names the track and lands a fish](assets/demo.gif)
 
 A Claude Code mod (a plugin of function hooks) that adds:
 
