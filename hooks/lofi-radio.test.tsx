@@ -10,6 +10,7 @@ const PANE = {
 } as const
 const EN = { options: { language: 'en' } }
 const TR = { options: { language: 'tr' } }
+const NO_BUTTON = { options: { language: 'en', playButton: false } }
 const SURFACES = ['terminal', 'desktop'] as const
 
 type Spawn = { stderr?: string; code?: number; hangMs?: number }
@@ -92,6 +93,13 @@ for (const surface of SURFACES) {
     engine(on)
     const ui = await start($, surface, BAND)
     expect((await ui.find({ key: 'fm-play' }))?.props.label).toBe('♪ Claude FM çal')
+  })
+
+  test(`the play button can be turned off, leaving the bands beneath (${surface})`, NO_BUTTON, async ($, on) => {
+    engine(on)
+    const ui = await start($, surface, BAND)
+    expect(await ui.find({ key: 'fm-play' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: 'beneath' })).toBeDefined()
   })
 
   test(`play hands ffplay the resolved stream and shows its error (${surface})`, EN, async ($, on) => {

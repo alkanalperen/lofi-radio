@@ -766,6 +766,9 @@ ${info}
 }
 
 export const register: Register = (on, options) => {
+  // The option may arrive as a boolean or as its string form.
+  const isPlayButtonShown = options.playButton !== false && options.playButton !== 'false'
+
   on('session.start', async ($, e, n) => {
     lang = await detectLang($, options.language)
     await $.command.register({ name: 'lofi', description: t().command })
@@ -893,7 +896,7 @@ export const register: Register = (on, options) => {
           <Text dimColor>♪ Claude FM: {s.note}</Text>
           <Button key="fm-play" label={ts.bandRetry} dimColor onPress={() => void play($)} />
         </Box>
-      ) : (
+      ) : isPlayButtonShown ? (
         <Box key="fm">
           <Button
             key="fm-play"
@@ -906,7 +909,7 @@ export const register: Register = (on, options) => {
             }}
           />
         </Box>
-      )
+      ) : null
 
     return (
       <Box flexDirection="column">

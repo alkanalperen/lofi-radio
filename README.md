@@ -50,6 +50,8 @@ If the button above the prompt does not show up, restart Claude Code.
 
 The player follows Claude Code's language setting, then the system locale. Set the plugin's `language` option to `en` or `tr` to choose.
 
+To keep the space above the prompt clear, set the `playButton` option to `false`. The radio then starts only from `/lofi`, and the now-playing row still shows while it plays.
+
 ## How it works
 
 `yt-dlp` resolves `https://clau.de/radio` (the address `/radio` opens) to the live HLS stream. The stream has no audio-only format, so it picks 360p, the smallest format with AAC-LC audio, and `ffplay` plays it with `-nodisp`. A resolved address goes stale within minutes, so every start resolves a fresh one, and a stream that stops getting segments is resolved again by itself. Changing the volume or the window restarts `ffplay`; the old player keeps going until the new one is ready.
