@@ -1,6 +1,6 @@
 {
   "name": "lofi-radio",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Claude FM player: a pane drawn like the stream with the current track, /lofi, volume, a mini video window; audio via yt-dlp + ffplay",
   "types": "./types/index.d.ts",
   "author": {
@@ -21,6 +21,12 @@
         "en",
         "tr"
       ]
+    },
+    "playButton": {
+      "type": "boolean",
+      "title": "Play button above the prompt",
+      "description": "Show ♪ Play Claude FM above the prompt while the radio is off. While it plays, the now-playing row shows either way.",
+      "default": true
     }
   }
 }
