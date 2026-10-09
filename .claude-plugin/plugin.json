@@ -1,0 +1,1 @@
+{ "name": "lofi-radio", "version": "0.2.0", "description": "Claude FM player: a pane drawn like the stream, /fm, volume, mini video window; audio via yt-dlp + ffplay", "types": "./types/index.d.ts" }

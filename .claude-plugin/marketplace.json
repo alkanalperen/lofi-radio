@@ -1,0 +1,13 @@
+{
+  "name": "lofi-radio",
+  "owner": {
+    "name": "alkanalperen"
+  },
+  "plugins": [
+    {
+      "name": "lofi-radio",
+      "source": "./",
+      "description": "Claude FM player for Claude Code: a pane drawn like the stream, /fm, volume, mini video window; audio via yt-dlp + ffplay"
+    }
+  ]
+}
