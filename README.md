@@ -21,11 +21,20 @@ Fan-made. Not affiliated with or endorsed by Anthropic.
 
 ## Install
 
+In a `claude` session in the terminal:
+
 ```
 /plugin install lofi-radio --marketplace alkanalperen/lofi-radio
 ```
 
-Restart Claude Code after installing.
+Or from the shell:
+
+```
+claude plugin marketplace add alkanalperen/lofi-radio
+claude plugin install lofi-radio@lofi-radio
+```
+
+If the button above the prompt does not show up, restart Claude Code.
 
 ## Use
 

@@ -9,5 +9,6 @@
       "source": "./",
       "description": "Claude FM player for Claude Code: a pane drawn like the stream, /fm, volume, mini video window; audio via yt-dlp + ffplay"
     }
-  ]
+  ],
+  "description": "Claude FM lo-fi radio inside Claude Code"
 }
