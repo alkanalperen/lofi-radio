@@ -11,12 +11,13 @@ A Claude Code mod (a plugin of function hooks) that adds:
 
 By default it plays audio only, so there is no browser tab.
 
-Fan-made. Not affiliated with or endorsed by Anthropic.
+Unofficial, fan-made mod. Not affiliated with or endorsed by Anthropic.
 
 ## Requirements
 
 - macOS (it looks for tools in Homebrew's paths and stops the player with `pkill`)
-- `brew install yt-dlp ffmpeg`
+- `brew install yt-dlp ffmpeg deno` (yt-dlp needs a JavaScript runtime such as Deno for full YouTube support)
+- Keep yt-dlp current with `brew upgrade yt-dlp`. YouTube changes often break older versions.
 - Claude Code with plugin hooks (mods)
 
 ## Install
@@ -48,12 +49,18 @@ The UI labels are Turkish for now.
 
 `yt-dlp` resolves `https://clau.de/radio` (the address `/radio` opens) to the live HLS stream. The stream has no audio-only format, so it picks 360p, the smallest format with AAC-LC audio. `ffplay` plays it with `-nodisp`. Changing the volume or the window restarts `ffplay` with the cached address, which takes about a second.
 
-The current track name is only shown inside the video, so the mini window is the place to see it.
+The current track name is only shown inside the video, so the mini window is the place to see it. [earwitness.fyi](https://earwitness.fyi) also reads the track ticker and credits the artists.
 
 ## Credits
 
-The pixel Clawd is adapted from the agent-deck mod's sprite, which traces DockCrab's Clawdy. Claude, Claude FM and Clawd belong to Anthropic.
+The pixel Clawd sprite comes from johnnyvizz's savvy-progress ([claude-kit](https://github.com/JohnnyVizz/claude-kit), MIT) by way of the agent-deck mod. Claude, Claude FM and the Clawd character belong to Anthropic.
+
+The music on Claude FM is made by independent artists. If a track catches you, open the stream on YouTube or check earwitness.fyi to find who made it.
+
+## License
+
+MIT for the code. See [LICENSE](LICENSE).
 
 ## Türkçe
 
-Claude FM'i Claude Code'un içinde çalan bir mod. Prompt'un üstündeki **♪ Claude FM çal** butonuna bas veya `/fm` yaz. Panelde çal/durdur, ses ve mini pencere var. Kurulum için önce `brew install yt-dlp ffmpeg`, sonra yukarıdaki `/plugin install` satırı.
+Claude FM'i Claude Code'un içinde çalan bir mod. Prompt'un üstündeki **♪ Claude FM çal** butonuna bas veya `/fm` yaz. Panelde çal/durdur, ses ve mini pencere var. Kurulum için önce `brew install yt-dlp ffmpeg deno`, sonra yukarıdaki `/plugin install` satırı. Resmi değil, Anthropic ile bağı yok.

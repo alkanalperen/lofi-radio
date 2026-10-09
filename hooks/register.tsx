@@ -197,7 +197,8 @@ const rangePath = (W: number, top: number, bottom: number, base: number, amp: nu
 
 type Px = [number, number, number, number, string]
 
-// Pixel Clawd from agent-deck (DockCrab/Clawdy), on a 30×28 grid, with headphones.
+// Pixel Clawd from agent-deck, after johnnyvizz's savvy-progress (MIT, see LICENSE),
+// on a 30×28 grid, with headphones. The character is Anthropic's.
 const CLAWD: Px[] = [
   [7, 10, 16, 12, CLAY], [3, 14, 4, 4, CLAY], [23, 14, 4, 4, CLAY], [9, 12, 2, 2, INK], [19, 12, 2, 2, INK],
   [8, 6, 14, 1, '#55514C'], [7, 7, 1, 1, '#55514C'], [22, 7, 1, 1, '#55514C'], [6, 8, 1, 1, '#55514C'], [23, 8, 1, 1, '#55514C'],
@@ -305,7 +306,12 @@ export const register: Register = on => {
       </Box>
     )
     const note = s.status === 'error' && s.note ? <Text key="fm-note" color="error">{s.note}</Text> : null
-    const link = <Link key="fm-yt" href={STREAM_URL} label="YouTube'da aç" />
+    const link = (
+      <Box key="fm-foot" flexDirection="row" gap={1} flexWrap="wrap">
+        <Link key="fm-yt" href={STREAM_URL} label="YouTube'da aç" />
+        <Text dimColor>· resmi değil, Anthropic ile bağı yok</Text>
+      </Box>
+    )
 
     if ('Svg' in ui) {
       const { Svg } = ui
